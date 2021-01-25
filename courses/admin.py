@@ -1,16 +1,14 @@
 from django.contrib import admin
-
-from .models import Subject, Module, Course
+from .models import Subject, Course, Module
 
 
 @admin.register(Subject)
 class SubjectAdmin(admin.ModelAdmin):
     list_display = ['title', 'slug']
     prepopulated_fields = {'slug': ('title',)}
-    # позволяет определить поля, которые получают значение основываясь на значениях других полей
 
 
-class ModuleInLine(admin.StackedInline):
+class ModuleInline(admin.StackedInline):
     model = Module
 
 
@@ -20,4 +18,4 @@ class CourseAdmin(admin.ModelAdmin):
     list_filter = ['created', 'subject']
     search_fields = ['title', 'overview']
     prepopulated_fields = {'slug': ('title',)}
-    inlines = [ModuleInLine]
+    inlines = [ModuleInline]
